@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<html lang="en">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <title>Random friend </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <link href="static/css/bootstrap.css" rel="stylesheet" type="text/css">
+    <link href="static/css/bootstrap-theme.css" rel="stylesheet" type="text/css">
+    <link href="static/css/style.css" rel="stylesheet" type="text/css">
+
+</head>
+<body>
+
+<header>
+  <div class="container">
+    <h1 class="logo">My random friend</h1>
+
+    {% if not login_require %}
+        <a href="/logout" class="btn btn-primary active" role="button" style="margin-left: 50%;">Logout</a>
+    {% endif %}
+  </div>
+</header>
+
+
+
+<div class="container">
+
+    {% if non_found %}
+        <h2>Sorry, seems you have no friends</h2>
+
+    {% elif bad_token %}
+        <h2>Sorry, something wrong with your auth token</h2>
+
+    {% elif person %}
+        <div class="row">
+
+
+        <div class="col-lg-5">
+            <div class="media">
+                <a class="pull-left" href="#">
+                    <img class="media-object dp img-circle" src="{{ person.picture.data.url}}" style="width: 80px;height:80px;">
+                </a>
+                <div class="media-body">
+                    <h4 class="media-heading">{{ person.name }} <small>
+                        {% if person.location %}
+                            {{ person.location.name }} {% endif %}</small></h4>
+                    <h5>{{ person.work}}  <a href="{{ person.link }}">{{ person.name }} on fb</a></h5>
+                    <hr style="margin:8px auto">
+                   {%  if person.music %}
+                        <p><span class="label label-info">Favorite music</span>
+                            : {% for cat in person.music.data  %}
+                            <span class="label label-default">{{ cat.name }}</span>
+                        {%  endfor %}</p>
+                    {% endif %}
+                   <hr style="margin:8px auto">
+                   {%  if person.education %}
+                        <p><span class="label label-info">Education</span>
+                            : {% for school in person.education %}
+                            <span class="label label-default">{{ school.type }} : {{ school.school.name}}</span>
+                        {%  endfor %}</p>
+                    {% endif %}
+                <hr style="margin:8px auto">
+                Other info: religion, political .. etc
+                <hr style="margin:8px auto">
+                    <span class="label label-default">{{ person.username }}</span>
+                    <span class="label label-default">{{ person.gender }}</span>
+                    <span class="label label-default">{{ person.hometown  }}</span>
+                    <span class="label label-default">{{ person.political  }}</span>
+                    <span class="label label-default">{{ person.religion  }}</span>
+                </div>
+            </div>
+
+    <a href="/" class="btn btn-lg btn-primary btn-block active" role="button">Next one</a>
+    {% endif %}
+
+    </div>
+
+    {% if login_require %}
+    <div class="row">
+        <div class="col-sm-6 col-md-4 col-md-offset-4">
+            <h1 class="text-center login-title">Sign in to chose one of your facebook friends</h1>
+                <img class="profile-img" src="https://lh5.googleusercontent.com/-b0-k99FZlyE/AAAAAAAAAAI/AAAAAAAAAAA/eu7opA4byxI/photo.jpg?sz=120"
+                    alt="">
+                <a href="/login" class="btn btn-lg btn-primary btn-block active" role="button">Sign in</a>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+</div>
+</body>
+</html>
