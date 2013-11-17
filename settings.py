@@ -1,31 +1,33 @@
-from utils import make_api_getter
+from utils import make_api_getter, make_permission
+import os
+
+## (attribute name, permission name or None)
 
 lookup_fields = [
-    'picture',
-    'name',
-    'gender',
-    'education',
-    'hometown',
-    'link',
-    'political',
-    'religion',
-    'relationship_status',
-    'work',
-    'username',
-    'interested_in',
-    'movies',
-    'location',
-    'music',
-    'movies',
+    ('picture.width(300)', None),
+    ('name', 'email'),
+    ('gender', None),
+    ('education', None),
+    ('hometown', 'friends_hometown'),
+    ('link',  None),
+    ('relationship_status', 'friends_relationships'),
+    ('work', 'friends_work_history'),
+    ('username', None),
+    ('location', 'friends_location'),
+    ('music', None),
 ]
 
+look_up_names  = [p[0] for p in lookup_fields]
+
 GET_FRIEND_INFO = make_api_getter(lookup_fields)
+PERMISSIONS = make_permission(lookup_fields)
 
 DEBUG = True
 
-FACEBOOK_APP_ID = '499253193515142'
-FACEBOOK_API_SECRET = 'fff847f17a8b653598b3574845ed5b1b'
+
+FACEBOOK_APP_ID = os.environ['FACEBOOK_APP_ID']
+FACEBOOK_API_SECRET = os.environ['FACEBOOK_API_SECRET']
 
 GET_FRIENDS_URL = 'https://graph.facebook.com/me/friends?access_token=%s'
 
-SECRET_KEY = 'A0Zr98j/3yX R~XHH!jmN]LWX/,?RT'
+SECRET_KEY = os.environ['SECRET_KEY']

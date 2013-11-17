@@ -23,7 +23,7 @@ facebook = oauth.remote_app('facebook',
     authorize_url='https://www.facebook.com/dialog/oauth',
     consumer_key=FACEBOOK_APP_ID,
     consumer_secret=FACEBOOK_API_SECRET,
-    request_token_params={'scope': 'email'}
+    request_token_params=PERMISSIONS
 )
 
 
@@ -74,7 +74,7 @@ def home():
             return render_template('blueprint.html', non_found=True)
         friend = random.choice(data)
     except LookupError as e:  # (KeyError, IndexError)
-        app.logger.warning('Something wrong with returned structure %r'
+        app.logger.warning('Something wrong with api response %r'
                            % friends_resp)
         return render_template('blueprint.html', bad_token=True)
 
@@ -82,7 +82,8 @@ def home():
     api_url  = GET_FRIEND_INFO % (uid, session['facebook_token'][0],)
 
     result = requests.get(api_url)
-    return render_template('blueprint.html', person=result.json())
+    return render_template('blueprint.html', person=result.json(),
+                           look_up_names = look_up_names)
 
 
 if __name__ == '__main__':

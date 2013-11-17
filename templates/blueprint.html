@@ -45,13 +45,24 @@
         <div class="col-lg-5">
             <div class="media">
                 <a class="pull-left" href="#">
-                    <img class="media-object dp img-circle" src="{{ person.picture.data.url}}" style="width: 80px;height:80px;">
+                    <img class="media-object dp img-circle" src="{{ person.picture.data.url}}" style="width: 120px;height:120px;">
                 </a>
-                <div class="media-body">
-                    <h4 class="media-heading">{{ person.name }} <small>
+                <div class="media-body" style="width: 100%">
+                    <h4 class="media-heading">{{ person.name }}
                         {% if person.location %}
-                            {{ person.location.name }} {% endif %}</small></h4>
-                    <h5>{{ person.work}}  <a href="{{ person.link }}">{{ person.name }} on fb</a></h5>
+                            <br>
+                            <small>{{ person.location.name }} {% endif %}</small></h4>
+
+                    <h5><a href="{{ person.link }}">{{ person.name }} on fb</a></h5>
+
+                    {% if person.work %}
+                        <p><span class="label label-info">Work history</span>
+                            : {% for pos in person.work  %}
+                            <span class="label label-default">{{ pos.position and  pos.position.name }}
+                                {{pos.employer and pos.employer.name }}</span>
+                        {%  endfor %}</p>
+                    {% endif %}
+
                     <hr style="margin:8px auto">
                    {%  if person.music %}
                         <p><span class="label label-info">Favorite music</span>
@@ -66,18 +77,24 @@
                             <span class="label label-default">{{ school.type }} : {{ school.school.name}}</span>
                         {%  endfor %}</p>
                     {% endif %}
+
                 <hr style="margin:8px auto">
-                Other info: religion, political .. etc
-                <hr style="margin:8px auto">
-                    <span class="label label-default">{{ person.username }}</span>
-                    <span class="label label-default">{{ person.gender }}</span>
-                    <span class="label label-default">{{ person.hometown  }}</span>
-                    <span class="label label-default">{{ person.political  }}</span>
-                    <span class="label label-default">{{ person.religion  }}</span>
+                {% if person.hometown %}
+                    <p><span class="label label-info">Hometown</span> :
+                    <span class="label label-default">{{ person.hometown.name  }}</span></p>
+                {% endif %}
+                {% if person.relationship_status %}
+                    <p><span class="label label-info">Status</span> :
+                     <span class="label label-default">{{ person.relationship_status }}</span></p>
+                {% endif %}
                 </div>
             </div>
-
     <a href="/" class="btn btn-lg btn-primary btn-block active" role="button">Next one</a>
+
+    <br> <br> <br> Looking attributes:
+        {%  for name in look_up_names %}
+            <span class="label label-info">{{ name }}</span>
+        {%  endfor %}
     {% endif %}
 
     </div>
