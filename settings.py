@@ -22,7 +22,7 @@ look_up_names  = [p[0] for p in lookup_fields]
 GET_FRIEND_INFO = make_api_getter(lookup_fields)
 PERMISSIONS = make_permission(lookup_fields)
 
-DEBUG = True
+DEBUG = False
 
 
 FACEBOOK_APP_ID = os.environ['FACEBOOK_APP_ID']
