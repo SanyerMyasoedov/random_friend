@@ -17,12 +17,12 @@ lookup_fields = [
     ('music', None),
 ]
 
-look_up_names  = [p[0] for p in lookup_fields]
+look_up_names = [p[0] for p in lookup_fields]
 
 GET_FRIEND_INFO = make_api_getter(lookup_fields)
 PERMISSIONS = make_permission(lookup_fields)
 
-DEBUG = False
+DEBUG = True
 
 
 FACEBOOK_APP_ID = os.environ['FACEBOOK_APP_ID']
